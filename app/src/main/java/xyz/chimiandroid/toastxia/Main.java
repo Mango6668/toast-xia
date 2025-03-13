@@ -21,12 +21,16 @@ public class Main  extends Activity {
         setContentView(R.layout.main);
         // 请求权限
         FileTool.verifyStoragePermissions(this);
-        permission();
+       // permission();
         Toast.makeText(getApplicationContext(), "请授权权限", Toast.LENGTH_SHORT).show();
         INIT();
 
     }
 
+    /**
+     * 此方法用于获取全部文件权限
+     * @version 1.0
+     */
     private void permission () {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             // 先判断有没有权限
@@ -38,6 +42,9 @@ public class Main  extends Activity {
         }
     }
 
+    /**
+     * 此方法用于初始化Activity
+     */
     private void INIT(){
         toHomeButton = findViewById(R.id.toHomeButton);
         toSettingButton = findViewById(R.id.toSettingButton);
