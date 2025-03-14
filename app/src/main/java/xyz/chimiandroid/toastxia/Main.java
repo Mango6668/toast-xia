@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
 import android.view.View;
+import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Button;
 import android.widget.Toast;
 import xyz.chimiandroid.toastxia.tool.FileTool;
@@ -24,6 +25,8 @@ public class Main  extends Activity {
        // permission();
         Toast.makeText(getApplicationContext(), "请授权权限", Toast.LENGTH_SHORT).show();
         INIT();
+
+
 
     }
 
@@ -47,7 +50,42 @@ public class Main  extends Activity {
      */
     private void INIT(){
         toHomeButton = findViewById(R.id.toHomeButton);
+        // 将控件做无障碍化处理
+       toHomeButton.setAccessibilityDelegate(new View.AccessibilityDelegate() {
+           @Override
+           public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfo info) {
+               super.onInitializeAccessibilityNodeInfo(host, info);
+
+               // 设置类型，类型必须是安卓SDK Framework定义的类的全类名，否则类型设置无效。
+               info.setClassName(Button.class.getName());
+               // 设置状态
+               info.setCheckable(true);
+               info.setChecked(host.isSelected());
+               // 设置提示文字
+               if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                   info.setHintText("点击进入软件主页");
+               }
+           }
+       });
+
         toSettingButton = findViewById(R.id.toSettingButton);
+        toSettingButton.setAccessibilityDelegate(new View.AccessibilityDelegate() {
+            @Override
+            public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfo info) {
+                super.onInitializeAccessibilityNodeInfo(host, info);
+
+                // 设置类型，类型必须是安卓SDK Framework定义的类的全类名，否则类型设置无效。
+                info.setClassName(Button.class.getName());
+                // 设置状态
+                info.setCheckable(true);
+                info.setChecked(host.isSelected());
+
+                // 设置提示文字
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    info.setHintText("点击去设置内容");
+                }
+            }
+        });
         toHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

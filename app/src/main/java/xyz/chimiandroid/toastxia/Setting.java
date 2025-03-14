@@ -1,8 +1,10 @@
 package xyz.chimiandroid.toastxia;
 
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -43,7 +45,39 @@ public class Setting  extends Activity {
 
     private void INIT () {
         settingEditText =  findViewById(R.id.settingText);
+        settingEditText.setAccessibilityDelegate(new View.AccessibilityDelegate() {
+            @Override
+            public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfo info) {
+                super.onInitializeAccessibilityNodeInfo(host, info);
+
+                // 设置类型，类型必须是安卓SDK Framework定义的类的全类名，否则类型设置无效。
+                info.setClassName(EditText.class.getName());
+                // 设置状态
+                info.setCheckable(true);
+                info.setChecked(host.isSelected());
+                // 设置提示文字
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    info.setHintText("请输入要设置的内容");
+                }
+            }
+        });
         settingOk =    findViewById(R.id.settingOk);
+        settingOk.setAccessibilityDelegate(new View.AccessibilityDelegate() {
+            @Override
+            public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfo info) {
+                super.onInitializeAccessibilityNodeInfo(host, info);
+
+                // 设置类型，类型必须是安卓SDK Framework定义的类的全类名，否则类型设置无效。
+                info.setClassName(Button.class.getName());
+                // 设置状态
+                info.setCheckable(true);
+                info.setChecked(host.isSelected());
+                // 设置提示文字
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    info.setHintText("确定当前设置");
+                }
+            }
+        });
         settingOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

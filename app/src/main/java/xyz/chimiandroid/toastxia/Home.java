@@ -5,8 +5,10 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -62,6 +64,22 @@ public class Home  extends Activity {
 
     private void INIT() {
         copy = findViewById(R.id.copyButton);
+        copy.setAccessibilityDelegate(new View.AccessibilityDelegate() {
+            @Override
+            public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfo info) {
+                super.onInitializeAccessibilityNodeInfo(host, info);
+
+                // 设置类型，类型必须是安卓SDK Framework定义的类的全类名，否则类型设置无效。
+                info.setClassName(Button.class.getName());
+                // 设置状态
+                info.setCheckable(true);
+                info.setChecked(host.isSelected());
+                // 设置提示文字
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    info.setHintText("点击复制弹窗");
+                }
+            }
+        });
 
         // 文件路径
         String filePath = getApplicationContext().getExternalFilesDir(null).getAbsolutePath();
