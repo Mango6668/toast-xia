@@ -20,7 +20,8 @@ import xyz.chimiandroid.toastxia.tool.FileTool;
 
 public class Home  extends Activity {
     Button copy;
-    public static final String FILE_NAME = "cmtoast.txt";
+    private static final String FILE_NAME = "cmtoast.txt";
+  private final String filePath = getApplicationContext().getExternalFilesDir(null).getAbsolutePath();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,17 +37,29 @@ public class Home  extends Activity {
             return;
         }
 
-        String filePath = getApplicationContext().getExternalFilesDir(null).getAbsolutePath();
+
 
         File file = new File(filePath, FILE_NAME);
+        // 若配置文件不存在
+        if (!file.exists()) {
+            Toast.makeText(getApplicationContext(),"配置文件不存在！~\n已为您跳转到设置页面！~",Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(getApplicationContext(), Setting.class);
+            startActivity(intent);
+            return;
+
+        }
+
 
         String text = FileTool.getFileContent(file);
-        // 如果配置文件中为空文件
-        if (text.isEmpty()){
-            Toast.makeText(getApplicationContext(),"配置文件异常！即将跳转到设置页面！",Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(getApplicationContext(),Setting.class);
+
+
+        // 若获取到的是空字符串
+        if ("".equals(text)||text == null) {
+            Toast.makeText(getApplicationContext(),"配置文件异常！~已为您跳转到设置页面！~",Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(getApplicationContext(), Setting.class);
             startActivity(intent);
-           return;
+            return;
+
         }
 
 
@@ -82,7 +95,7 @@ public class Home  extends Activity {
         });
 
         // 文件路径
-        String filePath = getApplicationContext().getExternalFilesDir(null).getAbsolutePath();
+
         // 文件的对象
         File file = new File(filePath, FILE_NAME);
 
