@@ -4,10 +4,11 @@ import android.content.Context
 import android.view.accessibility.AccessibilityManager
 
 /**
- * 读屏工具类
+ * 无障碍工具类
  * @author 赤米
  * @version 1.0
  * @since JDK 17
+ * @see android.view.accessibility.AccessibilityManager
  */
 class ReadUtils {
     object ReadUtils {

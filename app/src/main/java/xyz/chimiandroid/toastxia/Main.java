@@ -13,7 +13,13 @@ import android.widget.Button;
 import android.widget.Toast;
 import xyz.chimiandroid.toastxia.tool.FileTool;
 public class Main  extends Activity {
+    /**
+     * 去主页的按钮对象
+     */
     Button toHomeButton;
+    /**
+     * 去设置的按钮对象
+     */
     Button toSettingButton;
 
     @Override

@@ -16,10 +16,29 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Objects;
 
+/**
+ * 文件工具类
+ * @author chimi
+ * @version 1.0
+ * @since JDK 17
+ * @see java.io.InputStreamReader
+ * @see java.io.FileInputStream
+ */
 public final class FileTool {
 
+    /**
+     * 请求权限的集合
+     */
     private static String[] PERMISSIONS_STORAGE = {"android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE"};
+    /**
+     * 权限请求码
+     */
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
+
+    /**
+     * 文件路径
+     */
+    private String filePath;
 
     /**
      * 请求相关权限
@@ -45,6 +64,12 @@ public final class FileTool {
      * @return 文件存在返回true，否则返回false
      */
 
+    /**
+     * 此方法用于判断文件是否存在
+     * @param fileName 文件名
+     * @param context 上下文
+     * @return 判断结果布尔值
+     */
     public static boolean fileExists(String fileName,Context context){
         String filePath = context.getExternalFilesDir(null).getAbsolutePath();
         File file  = new File(filePath,fileName);

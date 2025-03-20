@@ -21,12 +21,13 @@ import xyz.chimiandroid.toastxia.tool.FileTool;
 public class Home  extends Activity {
     Button copy;
     private static final String FILE_NAME = "cmtoast.txt";
-  private final String filePath = getApplicationContext().getExternalFilesDir(null).getAbsolutePath();
+  private  String filePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
+        filePath =   getApplicationContext().getExternalFilesDir(null).getAbsolutePath();
 
 
         if (!FileTool.fileExists(FILE_NAME, this)){
